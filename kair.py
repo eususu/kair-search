@@ -64,13 +64,29 @@ def request():
   answer = response.json()
   print(answer)
 
-def parse():
+def parse(query):
     with open('response_sample.json', 'r', encoding='utf-8') as f:
         data = json.loads(f.read())
     ap = ICNAirplane(**data["scheduleList"][0])
     print(ap)
-    print(ap.to_str())
-    return data
+    return ap.to_str()
+
+
+def inference(prompt, content, query):
+  import lite_llm_client as lmc
+  client = lmc.LiteLLMClient(lmc.OpenAIConfig())
+  messages = [
+     lmc.LLMMessage(role=lmc.LLMMessageRole.SYSTEM, content=prompt),
+     lmc.LLMMessage(role=lmc.LLMMessageRole.USER, content=f'{content}\n{query}'),
+  ]
+  answer = client.chat_completions(messages)
+  return answer
 
 if __name__ == "__main__":
-  parse()
+  prompt = "주어진 정보에 맞는 항공일정을 친절하게 MBTI F 성향으로 답번해"
+  query = "인천에서 난징가는 비행기"
+  parsed = parse(query)
+  print(f'{prompt}\n항공정보: {parsed}\n{query}')
+
+  answer = inference(prompt, parsed, query)
+  print(answer)

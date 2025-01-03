@@ -25,8 +25,8 @@ class ICNAirplane(BaseModel):
     if self.arrivalOrDeparture == "A":
       values.append(f'출발지=인천국제공항')
     #values.append(f'상태={self.arrivalOrDeparture}')
-    values.append(f'예상도착시간={self.estimatedTime}')
     values.append(f'터미널={self.terminal}')
+    values.append(f'예상도착시간={self.estimatedTime}')
     values.append(f'입국장출구={self.exitnumber}')
 
     return ",".join(values)
