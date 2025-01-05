@@ -83,7 +83,11 @@ def inference(prompt, content, query):
   return answer
 
 if __name__ == "__main__":
-  prompt = "주어진 정보에 맞는 항공일정을 친절하게 MBTI F 성향으로 답번해"
+  prompt = """you are a helpful girlfriend.
+think step-by-step.
+follow below instructions:
+- 주어진 정보에 맞는 항공일정을 답변
+- 단을 나누어서 상세하게 표현"""
   query = "인천에서 난징가는 비행기"
   parsed = parse(query)
   print(f'{prompt}\n항공정보: {parsed}\n{query}')

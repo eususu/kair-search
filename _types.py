@@ -22,11 +22,15 @@ class ICNAirplane(BaseModel):
 
     values.append(f'항공편={self.flightName}')
 
+    is_arriaval = False
     if self.arrivalOrDeparture == "A":
-      values.append(f'출발지=인천국제공항')
+      direction = "출국"
+      values.append(f'- 출발지=인천국제공항')
+    else:
+      direction = "입국"
     #values.append(f'상태={self.arrivalOrDeparture}')
-    values.append(f'터미널={self.terminal}')
-    values.append(f'예상도착시간={self.estimatedTime}')
-    values.append(f'입국장출구={self.exitnumber}')
+    values.append(f'- 터미널={self.terminal}')
+    values.append(f'- 예상도착시간={self.estimatedTime}')
+    values.append(f'- {direction}장 출구={self.exitnumber}')
 
-    return ",".join(values)
+    return "\n".join(values)
