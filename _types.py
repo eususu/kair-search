@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, field_validator, validator
+from pydantic import BaseModel, Field, field_validator
 
 class ICNAirplane(BaseModel):
   strgFileNm:str
@@ -8,6 +8,7 @@ class ICNAirplane(BaseModel):
   airportName1Ko:str
   arrivalOrDeparture:str
   estimatedTime:str = Field(alias='etime')
+  stattxt:str
   terminalId:str
   terminal:str
   gatenumber:str
@@ -31,6 +32,7 @@ class ICNAirplane(BaseModel):
     #values.append(f'상태={self.arrivalOrDeparture}')
     values.append(f'- 터미널={self.terminal}')
     values.append(f'- 예상도착시간={self.estimatedTime}')
+    values.append(f'- 상태={self.stattxt}')
     values.append(f'- {direction}장 출구={self.exitnumber}')
 
     return "\n".join(values)
