@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 requests = "*"
 pydantic = "*"
-lite-llm-client = "*"
+lite-llm-client = "0.2.0"
 
 [dev-packages]
 

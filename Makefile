@@ -1,2 +1,2 @@
 all:
-	python3 kair.py
+	pipenv shell python3 kair.py

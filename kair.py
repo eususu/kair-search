@@ -4,6 +4,8 @@ import json
 from urllib.parse import urlencode
 
 from _types import ICNAirplane
+from schedule import extract_schedule
+from search import search_flight
 
 
 url = "https://www.airport.kr/arr/ap_ko/getArrPasSchList.do"
@@ -72,22 +74,28 @@ def parse(query):
     return ap.to_str()
 
 
-def inference(prompt, content, query):
-  import lite_llm_client as lmc
-  client = lmc.LiteLLMClient(lmc.OpenAIConfig())
-  messages = [
-     lmc.LLMMessage(role=lmc.LLMMessageRole.SYSTEM, content=prompt),
-     lmc.LLMMessage(role=lmc.LLMMessageRole.USER, content=f'{content}\n{query}'),
-  ]
-  answer = client.chat_completions(messages)
-  return answer
 
 if __name__ == "__main__":
-  prompt = """you are a helpful girlfriend.
+
+  query = "1월 13일부터 1월 18일 까지 상해"
+
+  schedule = extract_schedule(query)
+  search_flight(schedule)
+  exit(0)
+  from datetime import datetime
+  now = datetime.now()
+  prompt = f"""
+You're a pleasant, helpful, happy assistant.
+you should share your happiness to me.
 think step-by-step.
 follow below instructions:
-- 주어진 정보에 맞는 항공일정을 답변
-- 단을 나누어서 상세하게 표현"""
+- Answer the flight schedule according to the given information
+- Express in detail by dividing into sections
+- Summarize the answered content briefly
+current time is {now.strftime('%H:%M')}
+"""
+  prompt = prompt.strip()
+
   query = "인천에서 난징가는 비행기"
   parsed = parse(query)
   print(f'{prompt}\n항공정보: {parsed}\n{query}')
